@@ -15,7 +15,8 @@
                 <argument id="service_container" type="service" />
             </call>
         </service>
-        <service>
+
+        <service id="SwagShopFinder\Storefront\Subscriber\FooterSubscriber">
             <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
             <argument id="swag_shop_finder.repository" type="service"/>
             <tag name="kernel.event_subscriber"/>

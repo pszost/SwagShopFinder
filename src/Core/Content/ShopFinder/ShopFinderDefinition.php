@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace SwagShopFinder\Core\Content\ShopFinder;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
@@ -17,7 +18,7 @@ use Shopware\Core\System\Country\CountryDefinition;
 
 class ShopFinderDefinition extends EntityDefinition
 {
-    public const ENTITY_NAME = 'swag_example';
+    public const ENTITY_NAME = 'swag_shop_finder';
 
     public function getEntityName(): string
     {

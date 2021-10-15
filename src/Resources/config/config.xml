@@ -5,6 +5,7 @@
     <card>
         <title>Basic configuration</title>
         <title lang="de-DE">Unga bunga</title>
+
         <input-field type="bool">
             <name>showInStoreFront</name>
             <label>Show in storefront</label>

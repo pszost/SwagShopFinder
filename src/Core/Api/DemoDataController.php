@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace SwagShopFinder\Core\Api;
 
 use Faker\Factory;
 use Shopware\Core\Framework\Context;
@@ -37,7 +38,7 @@ class DemoDataController extends AbstractController
     }
 
     /**
-     * @Route("/api/v{version}/_action/swag-shop-finder/generate", name="api.custom.swag_shop_finder.generate", method={"POST})
+     * @Route("/api/v{version}/_action/swag-shop-finder/generate", name="api.custom.swag_shop_finder.generate", methods={"POST"})
      * @param Context $context
      * @return Response
      * @throws CountryNotFoundException

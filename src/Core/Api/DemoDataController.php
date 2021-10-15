@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace SwagShopFinder\Core\Api;
 
@@ -23,18 +21,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DemoDataController extends AbstractController
 {
-    /** @var EntityRepositoryInterface */
+    /**
+     * @var EntityRepositoryInterface
+     */
     private $countryRepository;
 
-    /** @var EntityRepositoryInterface */
-    private $shopFinderRepository;
+    /**
+     * @var EntityRepositoryInterface
+     */
+    private $shopfinderRepository;
 
-    public function __construct(
-        EntityRepositoryInterface $countryRepository,
-        EntityRepositoryInterface $shopFinderRepository
-    ) {
+    /**
+     * DemoDataController constructor.
+     * @param EntityRepositoryInterface $countryRepository
+     * @param EntityRepositoryInterface $shopfinderRepository
+     */
+    public function __construct(EntityRepositoryInterface $countryRepository, EntityRepositoryInterface $shopfinderRepository)
+    {
         $this->countryRepository = $countryRepository;
-        $this->shopFinderRepository = $shopFinderRepository;
+        $this->shopfinderRepository = $shopfinderRepository;
     }
 
     /**
@@ -44,41 +49,46 @@ class DemoDataController extends AbstractController
      * @throws CountryNotFoundException
      * @throws InconsistentCriteriaIdsException
      */
-    public function generate(Context $context): Response
+    public function generate(Context $context) : Response
     {
         $faker = Factory::create();
         $country = $this->getActiveCountry($context);
 
         $data = [];
-        for ($i = 0; $i < 50; $i++) {
+        foreach (range(0, 50) as $i) {
             $data[] = [
                 'id' => Uuid::randomHex(),
                 'active' => true,
                 'name' => $faker->name,
                 'street' => $faker->streetAddress,
-                'postCode' => $faker->postcode,
+                'post_code' => $faker->postcode,
                 'city' => $faker->city,
-                'countryId' => $country->getId(),
+                'telephone' => $faker->phoneNumber,
+                'countryId' => $country->getId()
             ];
         }
-        $this->shopFinderRepository->create($data, $context);
+        $this->shopfinderRepository->create($data, $context);
 
         return new Response('', Response::HTTP_NO_CONTENT);
     }
 
+    /**
+     * @param Context $context
+     * @return CountryEntity
+     * @throws CountryNotFoundException
+     * @throws InconsistentCriteriaIdsException
+     */
     private function getActiveCountry(Context $context): CountryEntity
     {
-        $criteria = new Criteria();
+        $criteria = New Criteria();
         $criteria->addFilter(new EqualsFilter('active', '1'));
         $criteria->setLimit(1);
 
         $country = $this->countryRepository->search($criteria, $context)->getEntities()->first();
-
-        if (null === $country) {
+        if ($country == null) {
             throw new CountryNotFoundException('');
         }
 
         return $country;
     }
-
 }

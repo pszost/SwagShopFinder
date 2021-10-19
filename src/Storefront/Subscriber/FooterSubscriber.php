@@ -3,6 +3,7 @@
 namespace SwagShopFinder\Storefront\Subscriber;
 
 use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -47,16 +48,13 @@ class FooterSubscriber implements EventSubscriberInterface
         $event->getPagelet()->addExtension('swag_shop_finder', $shops);
     }
 
-    private function fetchShops(Context $context): ShopFinderCollection
+    private function fetchShops(Context $context): EntityCollection
     {
         $criteria = new Criteria();
         $criteria->addAssociation('country');
         $criteria->addFilter(new EqualsFilter('active', '1'));
         $criteria->setLimit(5);
 
-        /** @var ShopFinderCollection $shopFinderCollection */
-        $shopFinderCollection = $this->shopFinderRepository->search($criteria, $context)->getEntities();
-
-        return $shopFinderCollection;
+        return $this->shopFinderRepository->search($criteria, $context)->getEntities();
     }
 }

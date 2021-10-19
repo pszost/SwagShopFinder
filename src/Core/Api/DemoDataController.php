@@ -61,16 +61,17 @@ class DemoDataController extends AbstractController
                 'active' => true,
                 'name' => $faker->name,
                 'street' => $faker->streetAddress,
-                'post_code' => $faker->postcode,
+                'postCode' => $faker->postcode,
                 'city' => $faker->city,
                 'telephone' => $faker->phoneNumber,
-                'countryId' => $country->getId()
+                'countryId' => $country->getId(),
             ];
         }
         $this->shopfinderRepository->create($data, $context);
 
         return new Response('', Response::HTTP_NO_CONTENT);
     }
+
 
     /**
      * @param Context $context
